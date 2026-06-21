@@ -1,29 +1,29 @@
 import Movie from "@/components/movie";
+import { API_URL } from "@/constants";
 import styles from "@/styles/home.module.css"
-
-export const API_URL = "https://nomad-movies-2.nomadcoders.workers.dev/movies";
 
 export const metadata = {
   title : "Home",
 }
 
-interface Movie {
+interface IMovie {
   id: string;
   title: string;
   poster_path: string;
 }
 
-async function getMovies(): Promise<Movie[]> {
+async function getMovies(): Promise<IMovie[]> {
   // 비동기 n초간 막음
   // await new Promise((resolve) => setTimeout(resolve, 1000))
-  const response = await fetch(API_URL);
+  const response = await fetch(API_URL, { next: { revalidate: 3600 } });
+  if (!response.ok) throw new Error(`Failed to fetch videos: ${response.status}`);
   const json = await response.json();
   return json;
 }
 
 export default async function HomePage() {
   const movies = await getMovies();
-  console.log('movies',movies[0])
+  
   return (
     <div className={styles.container}>
       {movies.map((movie) => (

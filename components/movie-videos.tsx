@@ -1,4 +1,4 @@
-import { API_URL } from "@/app/(home)/page";
+import { API_URL } from "@/constants";
 import styles from "@/styles/movie-videos.module.css"
 
 interface movieVideo {
@@ -8,7 +8,7 @@ interface movieVideo {
 }
 
 async function getVideos(id: string): Promise<movieVideo[]> {
-    const response = await fetch(`${API_URL}/${id}/videos`);
+    const response = await fetch(`${API_URL}/${id}/videos`, { next: { revalidate: 3600 } });
     if (!response.ok) throw new Error(`Failed to fetch videos: ${response.status}`);
     return response.json();
 }
