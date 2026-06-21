@@ -1,4 +1,5 @@
-import Link from "next/link";
+import Movie from "@/components/movie";
+import styles from "@/styles/home.module.css"
 
 export const API_URL = "https://nomad-movies-2.nomadcoders.workers.dev/movies";
 
@@ -7,8 +8,9 @@ export const metadata = {
 }
 
 interface Movie {
-  id: number;
+  id: string;
   title: string;
+  poster_path: string;
 }
 
 async function getMovies(): Promise<Movie[]> {
@@ -23,10 +25,10 @@ export default async function HomePage() {
   const movies = await getMovies();
   console.log('movies',movies[0])
   return (
-    <>
+    <div className={styles.container}>
       {movies.map((movie) => (
-        <li key={movie.id}><Link href={`/movies/${movie.id}`}>{movie.title}</Link></li>
+        <Movie key={movie.id} id={movie.id} title={movie.title} poster_path={movie.poster_path} />
       ))}
-    </>
+    </div>
   );
 }

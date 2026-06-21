@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 // Next.js에서 제공하는 Google Font 최적화 기능을 사용하여 폰트를 불러올 수 있습니다.
 // import { Geist } from "next/font/google";
-import "./globals.css";
+import "../styles/global.css";
 import Navigation from "@/components/navigation";
 
 // Google Font 최적화 기능예제.
